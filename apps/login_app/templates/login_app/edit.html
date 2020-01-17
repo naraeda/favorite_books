@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Favorite Books</title>
+</head>
+<body>
+    <h1>Welcome, {{user.first_name}}!</h1>
+    <a href="/logout">Log Out</a>
+    <div>
+        <h1>{{book.title}}</h1>
+    </div>
+    <p>Added by: {{book.uploaded_by.first_name}} {{book.uploaded_by.last_name}} </p>
+    <p>Added on: {{book.created_at}}</p>
+    <p>Last updated on: {{book.updated_at}}</p>
+    <form action="/books/{{book.id}}/edit" method="POST">
+        {% csrf_token %}
+        <p>Description: <textarea name="description" ols="30" rows="10">{{book.description}}</textarea></p>
+        <input type="submit" value="Update">
+        <p><a href="/books/{{book.id}}/delete">Delete</a></p>
+    </form>
+
+    <h1>Users Who Like This Book:</h1>
+    {% for user in liked_user.all %}
+        <ul>
+            <li>{{ user.first_name }} {{ user.last_name }}</li>
+        </ul>
+    {% endfor %}
+    <a href="/un_favorites/{{book.id}}">Un-Favorite</a>
+    <p><a href="/books">To User Page</a></p>
+</body>
+</html>
